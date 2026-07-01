@@ -9,9 +9,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-transparent border-[2px] border-primary text-button hover:bg-primary rounded-sm",
-        outline:
-          "bg-transparent border border-text-primary/30 text-button hover:bg-button hover:text-background hover:border-button rounded-sm",
+        default: "bg-gradient-to-r from-primary to-secondary text-button hover:bg-primary rounded-sm",
+        purple:
+          "bg-primary text-text-primary rounded-sm hover:shadow-[0_0_40px_rgba(115,51,210,0.4)] transition-all duration-300",
         noOutline:
           "bg-transparent hover:bg-button hover:text-background hover:border-button rounded-sm",
         ghost:
@@ -22,7 +22,7 @@ const buttonVariants = cva(
       },
       size: {
         default:
-          "h-9 px-5.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+          "h-10 px-5.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
         sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
         lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
