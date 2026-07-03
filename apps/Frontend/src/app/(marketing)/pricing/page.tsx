@@ -7,7 +7,7 @@ import {
 } from "@/components/pricing"
 import Header from "@/components/shared/Header"
 
-const PricingPage = () => {
+const page = () => {
   return (
     <div className="relative pt-17.5 z-0">
       <Header />
@@ -22,4 +22,4 @@ const PricingPage = () => {
   )
 }
 
-export default PricingPage
+export default page
