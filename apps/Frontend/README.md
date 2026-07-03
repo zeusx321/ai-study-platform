@@ -1,36 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 AI Study Platform - Frontend
 
-## Getting Started
+Frontend application for the AI Study Platform, built to provide an interactive and accessible learning experience for students.
 
-First, run the development server:
+---
+
+## 📖 Overview
+
+The frontend delivers a modern study environment where users can:
+
+- Organize study materials and notes
+- Upload learning resources
+- Interact with AI assistants
+- Generate quizzes and summaries
+- Track their learning progress
+- Access personalized educational tools
+
+The application focuses on simplicity, accessibility, and a responsive user experience across all devices.
+
+---
+
+## 🚀 Features
+
+### 🔐 Authentication
+- User registration and login
+- Secure session management
+- Profile settings
+
+### 📚 Study Workspace
+- Subject and course organization
+- Notes management
+- Learning resources dashboard
+- Personalized study environment
+
+### 📄 Document Management
+- Upload PDF, DOCX, and TXT files
+- Manage study materials
+- Connect documents with AI features
+
+### 🤖 AI Interaction
+- Real-time AI chat interface
+- AI-generated summaries
+- Adaptive quizzes
+- Step-by-step explanations
+- Personalized learning assistance
+
+### 📊 Progress Tracking
+- Quiz results
+- Learning analytics
+- Study activity monitoring
+
+### ♿ Accessibility
+- Keyboard navigation
+- Screen reader support
+- RTL support
+- Responsive design
+- Simplified learning mode
+
+---
+
+## 🛠 Tech Stack
+
+### Core Technologies
+- Next.js
+- React
+- TypeScript
+
+### UI & Styling
+- Tailwind CSS
+- shadcn/ui
+- Lucide Icons
+
+### State Management
+- Zustand
+
+### Forms & Validation
+- React Hook Form
+- Zod
+
+### Backend Integration
+- Supabase Client
+- REST APIs
+
+---
+
+## 📂 Project Structure
+
+```bash
+frontend/
+
+├── app/
+├── components/
+│   ├── ui/
+│   ├── auth/
+│   ├── dashboard/
+│   ├── workspace/
+│   ├── chat/
+│   └── quiz/
+│
+├── hooks/
+├── lib/
+├── services/
+├── types/
+├── public/
+└── styles/
+````
+
+---
+
+## ⚙️ Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build for production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🔐 Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_SUPABASE_URL=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+NEXT_PUBLIC_API_BASE_URL=
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 Frontend Goals
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Deliver a clean and intuitive user experience
+* Support accessibility for all learners
+* Maintain responsive layouts across devices
+* Provide seamless integration with AI services
+* Build reusable and scalable UI components
+
+---
