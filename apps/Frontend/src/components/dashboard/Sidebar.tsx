@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Menu, Home, Search, ChevronDown, ChevronRight, Pencil, Settings, Trash, Plus } from "lucide-react";
-import { PageItem } from "@/app/dashboard/page";
+import { PageItem } from "@/app/dashboard/DashboardContent";
 
 type SidebarProps = {
   pages?: PageItem[];

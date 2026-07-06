@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { Image as ImageIcon, SmilePlus, MessageSquare, Pencil, MoreHorizontal, Copy, Trash2, Download, CopyPlus, Bold, Italic, Underline, Palette, Highlighter, GripVertical } from 'lucide-react';
-import { PageItem } from '@/app/dashboard/page';
+import { PageItem } from '@/app/dashboard/DashboardContent';
 import { useEditor, EditorContent, ReactNodeViewRenderer, NodeViewWrapper } from '@tiptap/react';
 import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
@@ -15,6 +15,7 @@ import { Extension, Node as TiptapNode, mergeAttributes } from '@tiptap/core';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 import { Decoration, DecorationSet } from '@tiptap/pm/view';
 import { DragHandle } from '@tiptap/extension-drag-handle-react';
+const DragHandleComponent = DragHandle as any;
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
 import { Type, Heading1, Heading2, Heading3, List, ListOrdered, CheckSquare, ChevronRight, FilePlus, Quote, Minus, FileText } from 'lucide-react';
@@ -389,8 +390,8 @@ const ContentEditor = ({ activePage, allPages = [], updatePage, onSelectPage, on
 
   useEffect(() => {
     if (editor) {
-      editor.storage.pageLink.allPages = allPages;
-      editor.storage.pageLink.onSelectPage = onSelectPage;
+      (editor.storage as any).pageLink.allPages = allPages;
+      (editor.storage as any).pageLink.onSelectPage = onSelectPage;
     }
   }, [editor, allPages, onSelectPage]);
 
@@ -801,11 +802,11 @@ const ContentEditor = ({ activePage, allPages = [], updatePage, onSelectPage, on
 
         {/* Global Drag Handle */}
         {editor && (
-          <DragHandle editor={editor} tippyOptions={{ zIndex: 9999, placement: 'left' }} className="flex items-center justify-start w-10 h-6 text-[#6b7280] hover:text-[#d1d5db] cursor-grab relative z-50 group">
+          <DragHandleComponent editor={editor} tippyOptions={{ zIndex: 9999, placement: 'left' }} className="flex items-center justify-start w-10 h-6 text-[#6b7280] hover:text-[#d1d5db] cursor-grab relative z-50 group">
             <div className="flex items-center justify-center w-7 h-7 hover:bg-white/10 rounded transition-colors ml-1">
               <GripVertical className="w-5 h-5" />
             </div>
-          </DragHandle>
+          </DragHandleComponent>
         )}
 
         <EditorContent editor={editor} />
