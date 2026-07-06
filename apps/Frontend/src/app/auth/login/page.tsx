@@ -1,9 +1,18 @@
-import React from 'react'
+import type { Metadata } from "next";
 
-const page = () => {
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { LoginForm } from "@/components/auth/LoginForm";
+
+export const metadata: Metadata = {
+  title: "Sign In — Learner.ai",
+  description:
+    "Sign in to your Learner.ai account and continue your AI-powered learning journey.",
+};
+
+export default function LoginPage() {
   return (
-    <div>log in</div>
-  )
+    <AuthLayout>
+      <LoginForm />
+    </AuthLayout>
+  );
 }
-
-export default page
