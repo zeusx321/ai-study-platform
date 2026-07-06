@@ -1,6 +1,6 @@
 import { CheckCircle2 } from "lucide-react"
 
-import type { CheckoutFeatureItem } from "./checkout-data"
+import type { CheckoutFeatureItem } from "@/constants"
 
 type PlanFeaturesProps = {
   features: CheckoutFeatureItem[]

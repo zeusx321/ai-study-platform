@@ -15,7 +15,7 @@ const Hero = () => {
             </h1>
             <p className=" text-text-secondary w-[70%] mt-2">Learn smarter with AI. Personalized lessons, instant feedback, and support tailored to every student.</p>
         </div>
-        <Button className="px-6 h-12 text-sm shadow-[0_0_20px_rgba(115,51,210,0.2)] hover:shadow-[0_0_30px_rgba(115,51,210,0.7)] hover:-translate-y-0.5 transition-all duration-300">Get Started</Button>
+        <Button className="px-6 h-12 text-sm shadow-[0_0_20px_rgba(115,51,210,0.2)] hover:shadow-[0_0_30px_rgba(115,51,210,0.7)] hover:-translate-y-0.5 hover:text-white transition-all duration-300">Get Started</Button>
     </main>
   )
 }

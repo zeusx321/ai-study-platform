@@ -73,7 +73,7 @@ const PricingCard = ({ billingCycle, plan }: PricingCardProps) => {
             className={cn(
               "h-12 w-full rounded-sm text-[14px] font-extrabold",
               isFree &&
-                "border border-white/80 bg-transparent text-text-primary hover:border-primary hover:bg-white/5",
+                "border border-white/80 bg-transparent text-text-primary hover:border-primary hover:bg-white/5 hover:text-white",
               isFeatured &&
                 "bg-gradient-to-r from-primary to-secondary text-white shadow-[0_0_28px_rgba(115,51,210,0.34)] hover:shadow-[0_0_34px_rgba(248,83,174,0.42)]",
               isPremium && "bg-white text-background hover:bg-white/90",

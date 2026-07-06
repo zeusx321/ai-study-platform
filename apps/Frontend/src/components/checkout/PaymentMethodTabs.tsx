@@ -1,6 +1,6 @@
 "use client"
 
-import { paymentMethods } from "./checkout-data"
+import { paymentMethods } from "@/constants"
 import type { PaymentMethod } from "./checkout-types"
 import { cn } from "@/lib/utils"
 

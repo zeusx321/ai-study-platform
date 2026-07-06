@@ -3,7 +3,7 @@ import { ShieldCheck, Star } from "lucide-react"
 import { getPlanPrice } from "@/components/pricing/pricing-data"
 
 import BillingSelector from "./BillingSelector"
-import { checkoutFeaturesByPlan, guaranteeFeature } from "./checkout-data"
+import { checkoutFeaturesByPlan, guaranteeFeature } from "@/constants"
 import type { BillingCycle, PricingPlan } from "./checkout-types"
 import PlanFeatures from "./PlanFeatures"
 

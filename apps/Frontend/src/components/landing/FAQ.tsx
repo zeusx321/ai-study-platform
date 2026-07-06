@@ -18,7 +18,7 @@ const FAQ = () => {
           Frequently Asked Questions
         </h2>
         <p className="text-text-secondary max-w-[600px] mx-auto text-sm md:text-base">
-          Got questions? We've got answers. If you can't find what you are looking for, contact our support team.
+          Got questions? We&apos;ve got answers. If you can&apos;t find what you are looking for, contact our support team.
         </p>
       </div>
 

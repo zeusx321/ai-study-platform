@@ -1,6 +1,6 @@
 import { LockKeyhole } from "lucide-react"
 
-import { trustItems } from "./checkout-data"
+import { trustItems } from "@/constants"
 
 const TrustRow = () => {
   return (

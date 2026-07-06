@@ -1,86 +1,72 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, CircleHelp } from "lucide-react"
-import { AnimatePresence, motion } from "framer-motion"
-
-import { cn } from "@/lib/utils"
-
 import { pricingFaqs } from "./pricing-data"
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
+  const toggleFAQ = (idx: number) => {
+    setOpenIndex(openIndex === idx ? null : idx)
+  }
+
   return (
-    <section className="relative z-10 px-4 pt-20 sm:px-6">
-      <div className="mx-auto max-w-215">
-        <div className="mb-8 text-center">
-          <h2 className="text-[30px] font-extrabold leading-tight text-text-primary md:text-[38px]">
-            Frequently Asked Questions
-          </h2>
-          <p className="mt-3 text-[15px] leading-7 text-text-secondary">
-            Everything you need to know before choosing your plan.
-          </p>
-        </div>
+    <section id="faq" className="relative w-full max-w-[850px] mx-auto py-20 px-4 md:px-8 z-10 bg-background">
+      {/* Title */}
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-transparent">
+          Frequently Asked Questions
+        </h2>
+        <p className="text-text-secondary max-w-[600px] mx-auto text-sm md:text-base">
+          Everything you need to know before choosing your plan.
+        </p>
+      </div>
 
-        <div className="flex flex-col gap-3">
-          {pricingFaqs.map((faq, index) => {
-            const isOpen = openIndex === index
-            const contentId = `pricing-faq-${index}`
-            const buttonId = `${contentId}-trigger`
-
-            return (
-              <div
-                className={cn(
-                  "overflow-hidden rounded-md border border-white/10 bg-white/1.5 transition-colors duration-200",
-                  isOpen && "border-primary/80 bg-primary/3.5 shadow-[0_0_30px_rgba(115,51,210,0.12)]",
-                )}
-                key={faq.question}
+      {/* Accordion Wrapper */}
+      <div className="flex flex-col gap-4">
+        {pricingFaqs.map((faq, idx) => {
+          const isOpen = openIndex === idx
+          return (
+            <div 
+              key={idx}
+              className={`rounded-2xl border border-white/10 bg-text-secondary/5 transition-all duration-300 overflow-hidden ${
+                isOpen ? 'border-primary/40 bg-[#060606]' : ''
+              }`}
+            >
+              {/* Question Trigger */}
+              <button
+                onClick={() => toggleFAQ(idx)}
+                className="w-full py-5 px-6 flex justify-between items-center text-left text-text-primary hover:text-white font-medium text-sm md:text-base transition-colors duration-200"
               >
-                <button
-                  aria-controls={contentId}
-                  aria-expanded={isOpen}
-                  className="flex w-full items-center gap-3 px-5 py-5 text-left text-[14px] font-semibold text-text-primary outline-none transition-colors duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-primary/70"
-                  id={buttonId}
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  type="button"
-                >
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-[#7e37ff] text-white">
-                    <CircleHelp className="size-4" aria-hidden="true" />
-                  </span>
-                  <span className={cn("flex-1", isOpen && "text-[#df8cff]")}>
-                    {faq.question}
-                  </span>
-                  <ChevronDown
-                    className={cn(
-                      "size-4 shrink-0 text-text-primary transition-transform duration-200",
-                      isOpen && "rotate-180 text-[#df8cff]",
-                    )}
-                    aria-hidden="true"
-                  />
-                </button>
+                <span>{faq.question}</span>
+                <span className="ml-4 shrink-0">
+                  <svg 
+                    className={`w-5 h-5 transition-transform duration-300 text-text-secondary ${
+                      isOpen ? 'transform rotate-180 text-primary' : ''
+                    }`} 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor" 
+                    strokeWidth="2"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </span>
+              </button>
 
-                <AnimatePresence initial={false}>
-                  {isOpen ? (
-                    <motion.div
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      aria-labelledby={buttonId}
-                      id={contentId}
-                      initial={{ height: 0, opacity: 0 }}
-                      role="region"
-                      transition={{ duration: 0.22, ease: "easeOut" }}
-                    >
-                      <p className="px-14 pb-6 text-[14px] leading-7 text-text-secondary">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
+              {/* Answer Content */}
+              <div 
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                  isOpen ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className="px-6 pb-5 pt-1 border-t border-white/5 text-text-secondary text-xs md:text-sm leading-relaxed">
+                  {faq.answer}
+                </div>
               </div>
-            )
-          })}
-        </div>
+            </div>
+          )
+        })}
       </div>
     </section>
   )

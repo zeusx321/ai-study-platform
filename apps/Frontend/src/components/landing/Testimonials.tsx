@@ -33,7 +33,7 @@ const Testimonials = () => {
 
               {/* Text */}
               <p className="text-text-secondary text-sm leading-relaxed italic">
-                "{test.text}"
+                &quot;{test.text}&quot;
               </p>
             </div>
 
