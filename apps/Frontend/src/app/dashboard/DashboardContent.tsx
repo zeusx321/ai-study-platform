@@ -8,11 +8,16 @@ import type { User } from "@supabase/supabase-js";
 import Sidebar from '@/components/dashboard/Sidebar'
 import ContentEditor from '@/components/dashboard/ContentEditor'
 import AIPanel from '@/components/dashboard/AIPanel'
+import DashboardHome from '@/components/dashboard/DashboardHome'
+import SearchOverlay from '@/components/dashboard/SearchOverlay'
+import DashboardSettings from '@/components/dashboard/DashboardSettings'
+import DashboardTrash from '@/components/dashboard/DashboardTrash'
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 interface DashboardContentProps {
   user: User;
+  initialView?: "home" | "page" | "settings" | "trash";
 }
 
 export type PageItem = {
@@ -25,13 +30,15 @@ export type PageItem = {
 }
 
 
-export default function DashboardContent({ user }: DashboardContentProps) {
+export default function DashboardContent({ user, initialView = "home" }: DashboardContentProps) {
   const [pages, setPages] = useState<PageItem[]>([
     { id: '1', title: 'Lecture 1', content: '', parentId: null, isOpen: true },
     { id: '2', title: 'Semantic Web', content: '', parentId: '1' },
     { id: '3', title: 'College Marital', content: '', parentId: null },
   ]);
   const [activePageId, setActivePageId] = useState<string>('1');
+  const [activeView, setActiveView] = useState<"home" | "page" | "settings" | "trash">(initialView);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const duplicatePage = (id: string) => {
     const pageToDuplicate = pages.find(p => p.id === id);
@@ -113,6 +120,8 @@ export default function DashboardContent({ user }: DashboardContentProps) {
     }
     if (!preventSwitch) {
       setActivePageId(newPage.id);
+      setActiveView("page");
+      router.push("/dashboard");
     }
     return newPage.id;
   };
@@ -122,6 +131,11 @@ export default function DashboardContent({ user }: DashboardContentProps) {
   };
 
   const activePage = pages.find(p => p.id === activePageId);
+  const selectPage = (id: string) => {
+    setActivePageId(id);
+    setActiveView("page");
+    router.push("/dashboard");
+  };
 
   const router = useRouter();
 
@@ -148,21 +162,49 @@ export default function DashboardContent({ user }: DashboardContentProps) {
       <Sidebar 
         pages={pages}
         activePageId={activePageId}
-        onSelectPage={setActivePageId}
+        activeView={activeView}
+        onSelectPage={selectPage}
+        onSelectHome={() => {
+          setActiveView("home");
+          router.push("/dashboard");
+        }}
+        onOpenSearch={() => setIsSearchOpen(true)}
         onAddPage={addPage}
         onTogglePage={(id) => updatePage(id, { isOpen: !pages.find(p => p.id === id)?.isOpen })}
         onDeletePage={deletePage}
       />
-      <ContentEditor 
-        activePage={activePage}
-        allPages={pages}
-        updatePage={updatePage}
-        onSelectPage={setActivePageId}
-        onDuplicatePage={duplicatePage}
-        onDeletePage={deletePage}
-        onAddPage={addPage}
-      />
+      {activeView === "home" && (
+        <DashboardHome
+          displayName={displayName}
+          pages={pages}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onSelectPage={selectPage}
+        />
+      )}
+      {activeView === "page" && (
+        <ContentEditor 
+          activePage={activePage}
+          allPages={pages}
+          updatePage={updatePage}
+          onSelectPage={selectPage}
+          onDuplicatePage={duplicatePage}
+          onDeletePage={deletePage}
+          onAddPage={addPage}
+        />
+      )}
+      {activeView === "settings" && (
+        <DashboardSettings displayName={displayName} email={user.email} />
+      )}
+      {activeView === "trash" && (
+        <DashboardTrash pages={pages} />
+      )}
       <AIPanel />
+      <SearchOverlay
+        isOpen={isSearchOpen}
+        pages={pages}
+        onClose={() => setIsSearchOpen(false)}
+        onSelectPage={selectPage}
+      />
     </div>
 
   );

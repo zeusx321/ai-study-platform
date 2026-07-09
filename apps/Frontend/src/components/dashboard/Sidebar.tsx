@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Menu, Home, Search, ChevronDown, ChevronRight, Pencil, Settings, Trash, Plus } from "lucide-react";
 import { PageItem } from "@/app/dashboard/DashboardContent";
@@ -8,7 +9,10 @@ import { PageItem } from "@/app/dashboard/DashboardContent";
 type SidebarProps = {
   pages?: PageItem[];
   activePageId?: string;
+  activeView?: "home" | "page" | "settings" | "trash";
   onSelectPage?: (id: string) => void;
+  onSelectHome?: () => void;
+  onOpenSearch?: () => void;
   onAddPage?: (parentId: string | null, preventSwitch?: boolean) => string | void;
   onTogglePage?: (id: string) => void;
   onDeletePage?: (id: string) => void;
@@ -114,11 +118,15 @@ const PageTreeItem = ({
 const Sidebar = ({
   pages = [],
   activePageId,
+  activeView,
   onSelectPage,
+  onSelectHome,
+  onOpenSearch,
   onAddPage,
   onTogglePage,
   onDeletePage
 }: SidebarProps) => {
+  const router = useRouter();
   const [isPinned, setIsPinned] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [isPagesOpen, setIsPagesOpen] = useState(true);
@@ -175,11 +183,17 @@ const Sidebar = ({
         </div>
 
         <div className="flex flex-col gap-6 mt-8 px-[34px]">
-          <div className="flex items-center gap-4 cursor-pointer text-[#d1d5db] hover:text-white transition-colors">
+          <div
+            className={`flex items-center gap-4 cursor-pointer transition-colors ${activeView === "home" ? "rounded-md bg-[#8b5cf6]/30 px-3 py-2 text-white" : "text-[#d1d5db] hover:text-white"}`}
+            onClick={onSelectHome}
+          >
             <Home className="w-[20px] h-[20px]" strokeWidth={1.5} />
             <span className="font-light tracking-wide">Home</span>
           </div>
-          <div className="flex items-center gap-4 cursor-pointer text-[#d1d5db] hover:text-white transition-colors">
+          <div
+            className="flex items-center gap-4 cursor-pointer text-[#d1d5db] hover:text-white transition-colors"
+            onClick={onOpenSearch}
+          >
             <Search className="w-[20px] h-[20px]" strokeWidth={1.5} />
             <span className="font-light tracking-wide">Search</span>
           </div>
@@ -224,11 +238,17 @@ const Sidebar = ({
         </div>
 
         <div className="mt-auto px-[34px] flex flex-col gap-[26px] text-[#A1A1AA] pb-2">
-          <div className="flex items-center gap-[12px] cursor-pointer hover:text-white transition-colors">
+          <div
+            className={`flex items-center gap-[12px] cursor-pointer transition-colors ${activeView === "settings" ? "rounded-md bg-[#8b5cf6]/30 px-3 py-2 text-white" : "hover:text-white"}`}
+            onClick={() => router.push("/dashboard/settings")}
+          >
             <Settings className="w-[20px] h-[20px]" />
             <span className="text-[16px]">Settings</span>
           </div>
-          <div className="flex items-center gap-[12px] cursor-pointer hover:text-white transition-colors">
+          <div
+            className={`flex items-center gap-[12px] cursor-pointer transition-colors ${activeView === "trash" ? "rounded-md bg-[#8b5cf6]/30 px-3 py-2 text-white" : "hover:text-white"}`}
+            onClick={() => router.push("/dashboard/trash")}
+          >
             <Trash className="w-[20px] h-[20px]" />
             <span className="text-[16px]">Trash</span>
           </div>
