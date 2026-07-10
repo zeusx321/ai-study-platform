@@ -30,17 +30,17 @@ export const navItems = [
     {
         id: 1,
         title: "Pricing",
-        url: "pricing"
+        url: "/pricing"
     },
     {
         id: 2,
         title: "About",
-        url: "about"
+        url: "/about"
     },
     {
         id: 3,
         title: "Contact",
-        url: "contact"
+        url: "/contact"
     },
 ]
 
