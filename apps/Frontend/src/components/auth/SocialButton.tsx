@@ -58,7 +58,7 @@ export function SocialButton({
       variant="noOutline"
       size="lg"
       className={cn(
-        "h-11 w-full gap-3 rounded-xl border border-border/30 bg-card/40 font-medium text-foreground backdrop-blur-sm transition-all hover:bg-card/80 hover:border-border/50 shadow-sm",
+        "h-11 w-full gap-3 rounded-xl border border-white/10 bg-white/[0.03] font-medium text-white backdrop-blur-xs transition-all hover:bg-white/[0.08] hover:border-[#8b5cf6]/45 shadow-sm cursor-pointer",
         className
       )}
       onClick={onClick}

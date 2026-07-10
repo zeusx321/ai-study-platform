@@ -3,6 +3,7 @@
 import { Toaster } from "sonner";
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 interface AuthLayoutProps {
@@ -26,29 +27,34 @@ export function AuthLayout({ children }: AuthLayoutProps) {
         }}
       />
 
-      <div className="flex min-h-svh w-full bg-background text-foreground">
+      <div className="flex min-h-svh w-full bg-black text-white relative overflow-hidden">
+        {/* Glow effects */}
+        <div className="absolute top-[-25%] left-[-30%] w-[70vw] max-w-[1300px] h-[600px] bg-primary/20 blur-[210px] rounded-full z-0 pointer-events-none"></div>
+        <div className="absolute bottom-[-35%] right-[-45%] w-[70vw] max-w-[1300px] h-[600px] bg-primary/15 blur-[210px] rounded-full z-0 pointer-events-none"></div>
+
         {/* ── Left Side (Branding) ─────────────────────────────────── */}
-        <div className="hidden w-1/2 lg:flex flex-col justify-between p-12 border-r border-border/50">
+        <div className="relative z-10 hidden w-1/2 lg:flex flex-col justify-between p-12 bg-white/[0.01] backdrop-blur-xs">
           <div>
             <Link
               href="/"
-              className="flex items-center gap-2 transition-opacity hover:opacity-80 w-fit"
+              className="flex items-center transition-opacity hover:opacity-80 w-fit"
               aria-label="Go to homepage"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <Sparkles className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold tracking-tight text-white">
-                Dexa
-              </span>
+              <Image
+                src="/icons/logo.svg"
+                alt="Learner Logo"
+                width={130}
+                height={33.39}
+                priority
+              />
             </Link>
           </div>
 
           <div className="flex flex-col gap-6 max-w-md">
-            <div className="w-fit rounded-full bg-muted/50 px-3 py-1 border border-border/50 flex items-center gap-2">
+            <div className="w-fit rounded-full bg-white/[0.04] px-3 py-1 border border-white/10 flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-primary" />
               <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-                {isLogin ? "Welcome Back" : "Join Dexa"}
+                {isLogin ? "Welcome Back" : "Join Learner"}
               </span>
             </div>
 
@@ -59,8 +65,6 @@ export function AuthLayout({ children }: AuthLayoutProps) {
               </span>
             </h1>
 
-            <div className="h-1 w-12 bg-primary rounded-full mt-2" />
-
             <p className="text-lg text-muted-foreground leading-relaxed">
               {isLogin
                 ? "Sign in to access your personalized AI study materials, continue from where you left off, and master your subjects faster."
@@ -69,32 +73,38 @@ export function AuthLayout({ children }: AuthLayoutProps) {
           </div>
           
           <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Dexa. All rights reserved.
+            © {new Date().getFullYear()} Learner. All rights reserved.
           </div>
         </div>
 
         {/* ── Right Side (Auth Form) ───────────────────────────────── */}
-        <div className="relative flex w-full lg:w-1/2 flex-col items-center justify-center p-6 sm:p-12">
+        <div className="relative z-10 flex w-full lg:w-1/2 flex-col items-center justify-center p-6 sm:p-12">
           {/* Radial glow background effect */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden" aria-hidden="true">
-            <div className="h-[400px] w-[400px] lg:h-[600px] lg:w-[600px] rounded-full bg-purple-600/10 lg:bg-purple-600/20 blur-[100px]" />
+            <div className="h-[400px] w-[400px] lg:h-[600px] lg:w-[600px] rounded-full bg-primary/10 blur-[100px]" />
           </div>
 
           {/* Form Card Container */}
           <div className="relative z-10 w-full max-w-[440px]">
             {/* Mobile branding (visible only on small screens) */}
-            <div className="mb-8 flex lg:hidden items-center justify-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                <Sparkles className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <span className="text-2xl font-bold tracking-tight text-white">
-                Dexa
-              </span>
+            <div className="mb-8 flex lg:hidden items-center justify-center">
+              <Link
+                href="/"
+                className="flex items-center transition-opacity hover:opacity-80"
+                aria-label="Go to homepage"
+              >
+                <Image
+                  src="/icons/logo.svg"
+                  alt="Learner Logo"
+                  width={130}
+                  height={33.39}
+                  priority
+                />
+              </Link>
             </div>
 
-            {/* The form card itself (no internal padding here if the forms provide it, or we add it) */}
-            {/* The reference shows the form inputs inside a card area. */}
-            <div className="rounded-2xl bg-card border border-border/40 p-8 shadow-2xl relative overflow-hidden">
+            {/* The form card itself */}
+            <div className="rounded-2xl border border-[#666565]/40 bg-[#111116]/85 backdrop-blur-md p-8 shadow-[0_0_50px_-12px_rgba(115,51,210,0.25)] relative overflow-hidden">
               {children}
             </div>
           </div>

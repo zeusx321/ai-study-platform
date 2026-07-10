@@ -161,7 +161,7 @@ export function SignupForm() {
             autoComplete="name"
             aria-invalid={!!errors.fullName}
             aria-describedby={errors.fullName ? "signup-fullname-error" : undefined}
-            className="h-11 rounded-xl pl-10"
+            className="h-11 rounded-xl pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-muted-foreground/50 focus-visible:border-[#8b5cf6]/80 focus-visible:ring-1 focus-visible:ring-[#8b5cf6]/80 focus:bg-[#111116] transition-all"
             {...register("fullName")}
           />
         </div>
@@ -194,7 +194,7 @@ export function SignupForm() {
             autoComplete="email"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "signup-email-error" : undefined}
-            className="h-11 rounded-xl pl-10"
+            className="h-11 rounded-xl pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-muted-foreground/50 focus-visible:border-[#8b5cf6]/80 focus-visible:ring-1 focus-visible:ring-[#8b5cf6]/80 focus:bg-[#111116] transition-all"
             {...register("email")}
           />
         </div>
@@ -223,7 +223,7 @@ export function SignupForm() {
           placeholder="Create a strong password"
           autoComplete="new-password"
           error={errors.password?.message}
-          className="h-11 rounded-xl"
+          className="h-11 rounded-xl bg-white/[0.03] border-white/10 text-white placeholder:text-muted-foreground/50 focus-visible:border-[#8b5cf6]/80 focus-visible:ring-1 focus-visible:ring-[#8b5cf6]/80 focus:bg-[#111116] transition-all"
           {...register("password")}
         />
         {errors.password && (
@@ -254,7 +254,7 @@ export function SignupForm() {
           placeholder="Re-enter your password"
           autoComplete="new-password"
           error={errors.confirmPassword?.message}
-          className="h-11 rounded-xl"
+          className="h-11 rounded-xl bg-white/[0.03] border-white/10 text-white placeholder:text-muted-foreground/50 focus-visible:border-[#8b5cf6]/80 focus-visible:ring-1 focus-visible:ring-[#8b5cf6]/80 focus:bg-[#111116] transition-all"
           {...register("confirmPassword")}
         />
         {errors.confirmPassword && (
@@ -293,14 +293,14 @@ export function SignupForm() {
             I agree to the{" "}
             <Link
               href="/terms"
-              className="font-medium text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300 underline underline-offset-4"
+              className="font-medium text-primary hover:text-[#8b5cf6] underline underline-offset-4 transition-colors"
             >
               Terms of Service
             </Link>{" "}
             and{" "}
             <Link
               href="/privacy"
-              className="font-medium text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300 underline underline-offset-4"
+              className="font-medium text-primary hover:text-[#8b5cf6] underline underline-offset-4 transition-colors"
             >
               Privacy Policy
             </Link>
@@ -327,7 +327,7 @@ export function SignupForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-11 w-full rounded-xl bg-purple-600 font-semibold text-white shadow-md transition-all hover:bg-purple-700 disabled:opacity-70"
+          className="h-11 w-full rounded-xl bg-primary font-semibold text-white shadow-[0_0_20px_rgba(115,51,210,0.3)] transition-all hover:bg-[#8b5cf6] hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] focus-visible:ring-primary/50 disabled:opacity-70 cursor-pointer"
         >
           {isLoading ? (
             <>
@@ -354,7 +354,7 @@ export function SignupForm() {
         Already have an account?{" "}
         <Link
           href="/auth/login"
-          className="font-semibold text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300 transition-colors"
+          className="font-semibold text-primary hover:text-[#8b5cf6] transition-colors"
         >
           Sign in
         </Link>

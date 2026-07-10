@@ -78,7 +78,7 @@ export function LoginForm() {
             autoComplete="email"
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "login-email-error" : undefined}
-            className="h-11 rounded-xl pl-10"
+            className="h-11 rounded-xl pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-muted-foreground/50 focus-visible:border-[#8b5cf6]/80 focus-visible:ring-1 focus-visible:ring-[#8b5cf6]/80 focus:bg-[#111116] transition-all"
             {...register("email")}
           />
         </div>
@@ -106,7 +106,7 @@ export function LoginForm() {
           <button
             type="button"
             onClick={handleForgotPassword}
-            className="text-xs font-medium text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+            className="text-xs font-medium text-primary hover:text-[#8b5cf6] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
             disabled={isLoading}
           >
             Forgot password?
@@ -117,7 +117,7 @@ export function LoginForm() {
           placeholder="Enter your password"
           autoComplete="current-password"
           error={errors.password?.message}
-          className="h-11 rounded-xl"
+          className="h-11 rounded-xl bg-white/[0.03] border-white/10 text-white placeholder:text-muted-foreground/50 focus-visible:border-[#8b5cf6]/80 focus-visible:ring-1 focus-visible:ring-[#8b5cf6]/80 focus:bg-[#111116] transition-all"
           {...register("password")}
         />
         {errors.password && (
@@ -165,7 +165,7 @@ export function LoginForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-11 w-full rounded-xl bg-purple-600 font-semibold text-white shadow-md transition-all hover:bg-purple-700 disabled:opacity-70"
+          className="h-11 w-full rounded-xl bg-primary font-semibold text-white shadow-[0_0_20px_rgba(115,51,210,0.3)] transition-all hover:bg-[#8b5cf6] hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] focus-visible:ring-primary/50 disabled:opacity-70 cursor-pointer"
         >
           {isLoading ? (
             <>
@@ -192,7 +192,7 @@ export function LoginForm() {
         Don&apos;t have an account?{" "}
         <Link
           href="/auth/signup"
-          className="font-semibold text-purple-600 hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300 transition-colors"
+          className="font-semibold text-primary hover:text-[#8b5cf6] transition-colors"
         >
           Sign up
         </Link>

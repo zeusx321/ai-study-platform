@@ -12,11 +12,11 @@ export function Divider({ text = "or", className }: DividerProps) {
       role="separator"
       aria-label={text}
     >
-      <div className="flex-1 border-t border-border/30" />
+      <div className="flex-1 border-t border-[#666565]/20" />
       <span className="mx-4 text-xs font-medium uppercase tracking-wider text-muted-foreground/50">
         {text}
       </span>
-      <div className="flex-1 border-t border-border/30" />
+      <div className="flex-1 border-t border-[#666565]/20" />
     </div>
   );
 }
