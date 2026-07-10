@@ -12,7 +12,7 @@ import DashboardHome from '@/components/dashboard/DashboardHome'
 import SearchOverlay from '@/components/dashboard/SearchOverlay'
 import DashboardSettings from '@/components/dashboard/DashboardSettings'
 import DashboardTrash from '@/components/dashboard/DashboardTrash'
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 interface DashboardContentProps {
@@ -29,29 +29,110 @@ export type PageItem = {
   icon?: string;
 }
 
+// ─── Helper: map DB row (snake_case) → PageItem (camelCase) ──────────────────
+function dbRowToPageItem(row: any): PageItem {
+  return {
+    id: row.id,
+    title: row.title ?? 'Untitled',
+    content: row.content ?? '',
+    parentId: row.parent_id ?? null,
+    isOpen: row.is_open ?? true,
+    icon: row.icon ?? undefined,
+  };
+}
 
 export default function DashboardContent({ user, initialView = "home" }: DashboardContentProps) {
-  const [pages, setPages] = useState<PageItem[]>([
-    { id: '1', title: 'Lecture 1', content: '', parentId: null, isOpen: true },
-    { id: '2', title: 'Semantic Web', content: '', parentId: '1' },
-    { id: '3', title: 'College Marital', content: '', parentId: null },
-  ]);
-  const [activePageId, setActivePageId] = useState<string>('1');
+  const [pages, setPages] = useState<PageItem[]>([]);
+  const [activePageId, setActivePageId] = useState<string>('');
   const [activeView, setActiveView] = useState<"home" | "page" | "settings" | "trash">(initialView);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  const isMockUser = user.id === "mock-user-id";
+
+  // ─── Fetch pages from DB ──────────────────────────────────────────────────
+  const fetchPages = useCallback(async () => {
+    if (isMockUser) return;
+    try {
+      const res = await fetch('/api/pages');
+      if (!res.ok) throw new Error('Failed to fetch pages');
+      const data = await res.json();
+      const items: PageItem[] = data.map(dbRowToPageItem);
+      setPages(items);
+      if (items.length > 0 && !items.find(p => p.id === activePageId)) {
+        setActivePageId(items[0].id);
+      }
+    } catch (err) {
+      console.error('Error fetching pages:', err);
+      toast.error('Failed to load pages');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [isMockUser]);
+
+  // ─── Initial fetch on mount ────────────────────────────────────────────────
+  useEffect(() => {
+    if (isMockUser) {
+      // Offline dev mode — use hardcoded pages so the UI still works
+      setPages([
+        { id: '1', title: 'Lecture 1', content: '', parentId: null, isOpen: true },
+        { id: '2', title: 'Semantic Web', content: '', parentId: '1' },
+        { id: '3', title: 'College Marital', content: '', parentId: null },
+      ]);
+      setActivePageId('1');
+      setIsLoading(false);
+      return;
+    }
+
+    fetchPages();
+  }, [isMockUser, fetchPages]);
+
+  // ─── Debounced PATCH for content updates ───────────────────────────────────
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const persistUpdate = useCallback((id: string, updates: Partial<PageItem>) => {
+    if (isMockUser) return;
+
+    // Clear any pending save for this page
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+
+    saveTimerRef.current = setTimeout(async () => {
+      try {
+        await fetch('/api/pages', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, ...updates }),
+        });
+      } catch (err) {
+        console.error('Error saving page:', err);
+      }
+    }, 500); // 500ms debounce
+  }, [isMockUser]);
+
+  // ─── Duplicate Page ────────────────────────────────────────────────────────
   const duplicatePage = (id: string) => {
     const pageToDuplicate = pages.find(p => p.id === id);
     if (!pageToDuplicate) return;
+    const newId = uuidv4();
     const newPage: PageItem = {
       ...pageToDuplicate,
-      id: uuidv4(),
+      id: newId,
       title: `${pageToDuplicate.title} (Copy)`,
     };
     setPages(prev => [...prev, newPage]);
     setActivePageId(newPage.id);
+
+    // Persist to DB
+    if (!isMockUser) {
+      fetch('/api/pages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPage),
+      }).catch(err => console.error('Error duplicating page:', err));
+    }
   };
 
+  // ─── Delete Page ───────────────────────────────────────────────────────────
   const deletePage = (id: string) => {
     const getIdsToDelete = (pageId: string, currentPages: PageItem[]): string[] => {
       const children = currentPages.filter(p => p.parentId === pageId).map(p => p.id);
@@ -89,8 +170,15 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
     if (idsToDelete.includes(activePageId)) {
       setActivePageId(cleanedPages[0]?.id || '');
     }
+
+    // Persist to DB — only delete the root page, CASCADE handles children
+    if (!isMockUser) {
+      fetch(`/api/pages?id=${id}`, { method: 'DELETE' })
+        .catch(err => console.error('Error deleting page:', err));
+    }
   };
 
+  // ─── Add Page ──────────────────────────────────────────────────────────────
   const addPage = (parentId: string | null, preventSwitch = false) => {
     const newPage: PageItem = {
       id: uuidv4(),
@@ -115,6 +203,15 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
         });
         return [...updatedPages, newPage];
       });
+
+      // Also persist the parent update
+      if (!isMockUser && !preventSwitch) {
+        const parentPage = pages.find(p => p.id === parentId);
+        if (parentPage) {
+          const updatedContent = (parentPage.content || '') + `<div data-type="page-link" data-page-id="${newPage.id}"></div><p></p>`;
+          persistUpdate(parentId, { content: updatedContent, isOpen: true });
+        }
+      }
     } else {
       setPages(prev => [...prev, newPage]);
     }
@@ -123,11 +220,23 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
       setActiveView("page");
       router.push("/dashboard");
     }
+
+    // Persist new page to DB
+    if (!isMockUser) {
+      fetch('/api/pages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newPage),
+      }).catch(err => console.error('Error adding page:', err));
+    }
+
     return newPage.id;
   };
 
+  // ─── Update Page ───────────────────────────────────────────────────────────
   const updatePage = (id: string, updates: Partial<PageItem>) => {
     setPages(prev => prev.map(p => p.id === id ? { ...p, ...updates } : p));
+    persistUpdate(id, updates);
   };
 
   const activePage = pages.find(p => p.id === activePageId);
@@ -196,7 +305,7 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
         <DashboardSettings displayName={displayName} email={user.email} />
       )}
       {activeView === "trash" && (
-        <DashboardTrash pages={pages} />
+        <DashboardTrash pages={pages} isMockUser={isMockUser} onPagesChanged={fetchPages} />
       )}
       <AIPanel />
       <SearchOverlay
