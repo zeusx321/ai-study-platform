@@ -7,7 +7,7 @@ const Hero = () => {
         <div className="absolute top-[35%] left-1/2 -translate-x-1/2 w-[70vw] max-w-[1300px] h-[600px] bg-primary/30 blur-[210px] rounded-full z-0 pointer-events-none"></div>
 
         <div className='text-center flex flex-col justify-center items-center gap-3 relative z-10'>
-            <h1 className='w-full max-w-[800px] leading-[1.1]'>
+            <h1 className='w-full max-w-[800px] leading-[1.1] text-[75px] font-extrabold'>
                 AI-Powered Learning <br />
                 for <span className="relative whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)]">
                     Every Student

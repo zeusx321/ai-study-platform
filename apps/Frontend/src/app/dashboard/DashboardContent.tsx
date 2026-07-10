@@ -37,8 +37,11 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
     { id: '3', title: 'College Marital', content: '', parentId: null },
   ]);
   const [activePageId, setActivePageId] = useState<string>('1');
-  const [activeView, setActiveView] = useState<"home" | "page" | "settings" | "trash">(initialView);
+  const [activeView, setActiveView] = useState<"home" | "page" | "trash">(
+    initialView === "settings" ? "home" : (initialView as "home" | "page" | "trash" || "home")
+  );
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(initialView === "settings");
 
   const duplicatePage = (id: string) => {
     const pageToDuplicate = pages.find(p => p.id === id);
@@ -169,6 +172,7 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
           router.push("/dashboard");
         }}
         onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenSettings={() => setIsSettingsOpen(true)}
         onAddPage={addPage}
         onTogglePage={(id) => updatePage(id, { isOpen: !pages.find(p => p.id === id)?.isOpen })}
         onDeletePage={deletePage}
@@ -192,18 +196,26 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
           onAddPage={addPage}
         />
       )}
-      {activeView === "settings" && (
-        <DashboardSettings displayName={displayName} email={user.email} />
-      )}
       {activeView === "trash" && (
         <DashboardTrash pages={pages} />
       )}
-      <AIPanel />
+      {activeView === "page" && <AIPanel />}
       <SearchOverlay
         isOpen={isSearchOpen}
         pages={pages}
         onClose={() => setIsSearchOpen(false)}
         onSelectPage={selectPage}
+      />
+      <DashboardSettings
+        isOpen={isSettingsOpen}
+        onClose={() => {
+          setIsSettingsOpen(false);
+          if (window.location.pathname.endsWith("/settings")) {
+            router.push("/dashboard");
+          }
+        }}
+        displayName={displayName}
+        email={user.email}
       />
     </div>
 

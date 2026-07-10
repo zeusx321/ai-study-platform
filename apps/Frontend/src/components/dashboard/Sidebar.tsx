@@ -13,6 +13,7 @@ type SidebarProps = {
   onSelectPage?: (id: string) => void;
   onSelectHome?: () => void;
   onOpenSearch?: () => void;
+  onOpenSettings?: () => void;
   onAddPage?: (parentId: string | null, preventSwitch?: boolean) => string | void;
   onTogglePage?: (id: string) => void;
   onDeletePage?: (id: string) => void;
@@ -122,6 +123,7 @@ const Sidebar = ({
   onSelectPage,
   onSelectHome,
   onOpenSearch,
+  onOpenSettings,
   onAddPage,
   onTogglePage,
   onDeletePage
@@ -184,7 +186,7 @@ const Sidebar = ({
 
         <div className="flex flex-col gap-6 mt-8 px-[34px]">
           <div
-            className={`flex items-center gap-4 cursor-pointer transition-colors ${activeView === "home" ? "rounded-md bg-[#8b5cf6]/30 px-3 py-2 text-white" : "text-[#d1d5db] hover:text-white"}`}
+            className={`flex items-center gap-4 cursor-pointer transition-colors ${activeView === "home" ? "text-white" : "text-[#d1d5db] hover:text-white"}`}
             onClick={onSelectHome}
           >
             <Home className="w-[20px] h-[20px]" strokeWidth={1.5} />
@@ -239,14 +241,14 @@ const Sidebar = ({
 
         <div className="mt-auto px-[34px] flex flex-col gap-[26px] text-[#A1A1AA] pb-2">
           <div
-            className={`flex items-center gap-[12px] cursor-pointer transition-colors ${activeView === "settings" ? "rounded-md bg-[#8b5cf6]/30 px-3 py-2 text-white" : "hover:text-white"}`}
-            onClick={() => router.push("/dashboard/settings")}
+            className="flex items-center gap-[12px] cursor-pointer hover:text-white transition-colors"
+            onClick={onOpenSettings}
           >
             <Settings className="w-[20px] h-[20px]" />
             <span className="text-[16px]">Settings</span>
           </div>
           <div
-            className={`flex items-center gap-[12px] cursor-pointer transition-colors ${activeView === "trash" ? "rounded-md bg-[#8b5cf6]/30 px-3 py-2 text-white" : "hover:text-white"}`}
+            className={`flex items-center gap-[12px] cursor-pointer transition-colors ${activeView === "trash" ? "text-white" : "hover:text-white"}`}
             onClick={() => router.push("/dashboard/trash")}
           >
             <Trash className="w-[20px] h-[20px]" />

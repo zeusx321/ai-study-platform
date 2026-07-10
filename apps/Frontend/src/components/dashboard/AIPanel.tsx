@@ -3,13 +3,13 @@ import { Sparkles, Send, Pencil, Plus } from 'lucide-react';
 
 const AIPanel = () => {
   return (
-    <aside className="w-[380px] h-[calc(100vh-40px)] ml-0 border border-zinc-800/50 rounded-2xl bg-zinc-950 flex flex-col m-[20px] relative shrink-0 overflow-hidden">
+    <aside className="w-[420px] h-[calc(100vh-40px)] ml-0 bg-background/20 backdrop-blur-sm border border-[#666565]/50 rounded-lg flex flex-col m-[20px] relative shrink-0 overflow-hidden">
 
       {/* ── Header ─────────────────────────────────────────────── */}
       <div className="px-6 pt-6 pb-4">
-        <h2 className="text-[15px] font-semibold text-zinc-400 tracking-wide">
+        <h4 className="text-[21px] font-semibold tracking-wide">
           Learner AI
-        </h2>
+        </h4>
       </div>
 
       {/* ── Scrollable Body ────────────────────────────────────── */}
@@ -20,66 +20,66 @@ const AIPanel = () => {
           {/* Summarize Card */}
           <button
             onClick={() => {}}
-            className="group relative flex flex-col items-start gap-2 rounded-xl border border-zinc-800/60 bg-zinc-900/80 p-4 text-left transition-all duration-200 hover:border-zinc-700 hover:bg-zinc-900"
+            className="group flex items-center justify-between rounded-[22px] border border-zinc-800/50 bg-[#121212] p-5 text-left transition-all duration-200 hover:border-zinc-700 hover:bg-[#161616]"
           >
-            <div>
-              <p className="text-sm font-medium text-zinc-200">Summarize</p>
-              <p className="mt-0.5 text-[11px] leading-snug text-zinc-500">
+            <div className="flex flex-col gap-1 pr-1">
+              <span className="text-[17px] font-medium leading-none text-white tracking-tight">Summarize</span>
+              <span className="text-[14px] text-zinc-500 leading-snug">
                 You can summarize what you want
-              </p>
+              </span>
             </div>
-            <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full border border-zinc-700/60 bg-zinc-800/80 text-zinc-400 transition-colors group-hover:border-zinc-600 group-hover:text-zinc-300">
-              <Pencil className="h-3.5 w-3.5" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1c1c1c] text-white transition-colors group-hover:bg-[#252525]">
+              <Pencil className="h-4.5 w-4.5" />
             </div>
           </button>
 
           {/* Quiz Maker Card */}
           <button
             onClick={() => {}}
-            className="group relative flex flex-col items-start gap-2 rounded-xl border border-zinc-800/60 bg-zinc-900/80 p-4 text-left transition-all duration-200 hover:border-zinc-700 hover:bg-zinc-900"
+            className="group flex items-center justify-between rounded-[22px] border border-zinc-800/50 bg-[#121212] p-5 text-left transition-all duration-200 hover:border-zinc-700 hover:bg-[#161616]"
           >
-            <div>
-              <p className="text-sm font-medium text-zinc-200">Quiz Maker</p>
-              <p className="mt-0.5 text-[11px] leading-snug text-zinc-500">
+            <div className="flex flex-col gap-1 pr-1">
+              <span className="text-[17px] font-medium leading-none text-white tracking-tight">Quiz Maker</span>
+              <span className="text-[14px] text-zinc-500 leading-snug">
                 You can summarize what you want
-              </p>
+              </span>
             </div>
-            <div className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full border border-zinc-700/60 bg-zinc-800/80 text-zinc-400 transition-colors group-hover:border-zinc-600 group-hover:text-zinc-300">
-              <Pencil className="h-3.5 w-3.5" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1c1c1c] text-white transition-colors group-hover:bg-[#252525]">
+              <Pencil className="h-4.5 w-4.5" />
             </div>
           </button>
         </div>
 
         {/* ── Hero Text ──────────────────────────────────────── */}
         <div className="flex flex-1 flex-col items-center justify-center py-10">
-          <h1 className="text-center text-2xl font-semibold leading-tight tracking-tight text-zinc-200">
+          <h4 className="text-center text-[36px] font-semibold leading-tight tracking-tight">
             Tell Us What<br />You Need.
-          </h1>
+          </h4>
 
           {/* Suggestion Pills */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
             <button
               onClick={() => {}}
-              className="flex items-center gap-1.5 rounded-full border border-zinc-700/60 bg-transparent px-4 py-1.5 text-xs font-medium text-zinc-400 transition-all duration-200 hover:border-zinc-500 hover:text-zinc-200"
+              className="flex items-center gap-1.5 rounded-full border border-zinc-700/60 bg-transparent px-4 py-1.5 font-medium text-zinc-400 transition-all duration-200 hover:border-zinc-500 hover:text-zinc-200"
             >
               Summarize
-              <Plus className="h-3 w-3" />
+              <Plus className="h-4 w-4" />
             </button>
             <button
               onClick={() => {}}
-              className="flex items-center gap-1.5 rounded-full border border-zinc-700/60 bg-transparent px-4 py-1.5 text-xs font-medium text-zinc-400 transition-all duration-200 hover:border-zinc-500 hover:text-zinc-200"
+              className="flex items-center gap-1.5 rounded-full border border-zinc-700/60 bg-transparent px-4 py-1.5 font-medium text-zinc-400 transition-all duration-200 hover:border-zinc-500 hover:text-zinc-200"
             >
               Generate
-              <Plus className="h-3 w-3" />
+              <Plus className="h-4 w-4" />
             </button>
           </div>
           <div className="mt-2 flex items-center justify-center">
             <button
               onClick={() => {}}
-              className="flex items-center gap-1.5 rounded-full border border-zinc-700/60 bg-transparent px-4 py-1.5 text-xs font-medium text-zinc-400 transition-all duration-200 hover:border-zinc-500 hover:text-zinc-200"
+              className="flex items-center gap-1.5 rounded-full border border-zinc-700/60 bg-transparent px-4 py-1.5 font-medium text-zinc-400 transition-all duration-200 hover:border-zinc-500 hover:text-zinc-200"
             >
               Ask
-              <Plus className="h-3 w-3" />
+              <Plus className="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -87,7 +87,7 @@ const AIPanel = () => {
 
       {/* ── Chat Input Bar ─────────────────────────────────────── */}
       <div className="px-4 pb-4 pt-2">
-        <div className="flex items-center gap-2 rounded-full border border-zinc-800/60 bg-zinc-900/80 px-2 py-1.5 transition-colors focus-within:border-zinc-700">
+        <div className="flex items-center gap-2 rounded-full border bg-zinc-900/80 px-2 py-1.5 transition-colors border-zinc-700">
           {/* Plus button */}
           <button
             onClick={() => {}}

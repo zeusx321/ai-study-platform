@@ -45,8 +45,8 @@ const SearchOverlay = ({ isOpen, pages, onClose, onSelectPage }: SearchOverlayPr
   if (!isOpen) return null;
 
   return (
-    <div className="absolute inset-0 z-[80] flex items-start justify-center bg-black/45 px-6 pt-[7vh] backdrop-blur-md">
-      <div className="w-full max-w-[680px] rounded-2xl border border-[#8b5cf6]/80 bg-[#111116]/95 p-7 text-white shadow-[0_0_45px_rgba(139,92,246,0.25)]">
+    <div className="absolute inset-0 z-[80] flex items-start justify-center px-6 pt-[7vh] backdrop-blur-xs">
+      <div className="w-full max-w-[680px] rounded-2xl border border-[#666565]/50 bg-[#111116]/95 p-7 text-white ">
         <div className="flex items-center gap-4 border-b border-white/10 pb-4">
           <Search className="h-6 w-6 text-white" />
           <input

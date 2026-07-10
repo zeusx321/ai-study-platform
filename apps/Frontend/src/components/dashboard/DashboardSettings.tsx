@@ -1,29 +1,39 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Moon, Sun, User, SlidersHorizontal, Shield, Palette, X } from "lucide-react";
 
 type DashboardSettingsProps = {
+  isOpen: boolean;
+  onClose: () => void;
   displayName: string;
   email?: string;
 };
 
 const accentColors = ["#8b5cf6", "#0ea5e9", "#84cc16", "#f59e0b", "#ec4899"];
 
-const DashboardSettings = ({ displayName, email }: DashboardSettingsProps) => {
-  return (
-    <main className="flex-1 h-[calc(100vh-40px)] overflow-y-auto text-white my-[20px] border border-[#666565]/50 rounded-lg px-[45px] py-[35px] mx-[20px] relative">
-      <div className="absolute top-[25px] left-[45px] right-[45px] flex items-center justify-between z-10">
-        <span className="text-[14px] text-[#9ca3af] font-light">../ settings</span>
-        <span className="text-[#9ca3af]">...</span>
-      </div>
+const DashboardSettings = ({ isOpen, onClose, displayName, email }: DashboardSettingsProps) => {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
-      <div className="flex min-h-full items-center justify-center py-16">
-        <section className="grid w-full max-w-[760px] grid-cols-[220px_1fr] rounded-2xl border border-[#8b5cf6]/70 bg-[#111116]/90 p-6 shadow-[0_0_45px_rgba(139,92,246,0.18)]">
-          <div className="border-r border-white/10 pr-4">
+  if (!isOpen) return null;
+
+  return (
+    <div className="absolute inset-0 z-[80] flex items-start justify-center px-6 pt-[7vh] backdrop-blur-xs">
+      <div className="w-full max-w-[760px] rounded-2xl border border-[#666565]/50 bg-[#111116]/95 p-7 text-white relative">
+        <div className="grid grid-cols-[200px_1fr] gap-6">
+          <div className="border-r border-white/10 pr-6">
             <div className="mb-6 flex items-center justify-between">
               <h1 className="text-[22px] font-semibold">Settings</h1>
-              <X className="h-5 w-5 text-[#9ca3af]" />
+              <X className="h-5 w-5 text-[#9ca3af] cursor-pointer hover:text-white transition-colors" onClick={onClose} />
             </div>
             {[
               { label: "Profile", icon: User, active: true },
@@ -46,8 +56,8 @@ const DashboardSettings = ({ displayName, email }: DashboardSettingsProps) => {
             ))}
           </div>
 
-          <div className="pl-7">
-            <h2 className="mb-4 text-[16px] font-semibold">Profile</h2>
+          <div className="pl-4">
+            <h4 className="mb-4 text-[22px] font-semibold">Profile</h4>
             <label className="mb-4 block">
               <span className="mb-2 block text-[14px] text-white">Name</span>
               <input
@@ -98,7 +108,7 @@ const DashboardSettings = ({ displayName, email }: DashboardSettingsProps) => {
             </div>
 
             <div className="mt-8 flex justify-end gap-4">
-              <button type="button" className="rounded-md border border-white/10 px-8 py-3 text-[14px] text-[#d1d5db] hover:text-white">
+              <button type="button" onClick={onClose} className="rounded-md border border-white/10 px-8 py-3 text-[14px] text-[#d1d5db] hover:text-white">
                 Cancel
               </button>
               <button type="button" className="rounded-md bg-gradient-to-r from-[#6d28d9] to-[#d946ef] px-8 py-3 text-[14px] font-semibold text-white">
@@ -106,9 +116,9 @@ const DashboardSettings = ({ displayName, email }: DashboardSettingsProps) => {
               </button>
             </div>
           </div>
-        </section>
+        </div>
       </div>
-    </main>
+    </div>
   );
 };
 

@@ -23,13 +23,13 @@ const DashboardTrash = ({ pages }: DashboardTrashProps) => {
       </div>
 
       <section className="mx-auto mt-20 w-full max-w-[900px]">
-        <h1 className="mb-5 text-[28px] font-semibold">Trash</h1>
+        <h4 className="mb-5 text-[32px] font-semibold">Trash</h4>
         <div className="flex flex-col">
           {deletedItems.map((item) => (
             <div key={item.id} className="flex items-center gap-4 border-b border-white/10 py-4">
               <div className="min-w-0 flex-1">
-                <h2 className="truncate text-[15px] font-semibold text-white">{item.title}</h2>
-                <p className="mt-1 truncate text-[12px] text-[#9ca3af]">{item.description}</p>
+                <h4 className="truncate text-[18px] font-semibold text-white">{item.title}</h4>
+                <h4 className="mt-1 truncate text-[14px] text-[#9ca3af]">{item.description}</h4>
               </div>
               <button
                 type="button"
