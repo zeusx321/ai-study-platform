@@ -46,9 +46,15 @@ export default function DashboardContent({ user, initialView = "home" }: Dashboa
   const [activePageId, setActivePageId] = useState<string>('');
   const [activeView, setActiveView] = useState<"home" | "page" | "settings" | "trash">(initialView);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(initialView === "settings");
   const [isLoading, setIsLoading] = useState(true);
 
   const isMockUser = user.id === "mock-user-id";
+
+  useEffect(() => {
+    setIsSettingsOpen(initialView === "settings");
+    setActiveView(initialView);
+  }, [initialView]);
 
   // ─── Fetch pages from DB ──────────────────────────────────────────────────
   const fetchPages = useCallback(async () => {

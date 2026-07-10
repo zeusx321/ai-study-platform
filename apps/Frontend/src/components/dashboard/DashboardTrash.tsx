@@ -113,25 +113,9 @@ const DashboardTrash = ({ pages, isMockUser, onPagesChanged }: DashboardTrashPro
       <section className="mx-auto mt-20 w-full max-w-[900px]">
         <h4 className="mb-5 text-[32px] font-semibold">Trash</h4>
         <div className="flex flex-col">
-<<<<<<< HEAD
-          {deletedItems.map((item) => (
-            <div key={item.id} className="flex items-center gap-4 border-b border-white/10 py-4">
-              <div className="min-w-0 flex-1">
-                <h4 className="truncate text-[18px] font-semibold text-white">{item.title}</h4>
-                <h4 className="mt-1 truncate text-[14px] text-[#9ca3af]">{item.description}</h4>
-              </div>
-              <button
-                type="button"
-                className="rounded-full p-2 text-[#d1d5db] transition-colors hover:bg-white/10 hover:text-white"
-                aria-label={`Open actions for ${item.title}`}
-              >
-                <MoreHorizontal className="h-5 w-5" />
-              </button>
-=======
           {isLoading ? (
             <div className="flex items-center justify-center py-16 text-[#9ca3af]">
               <span className="text-[15px]">Loading...</span>
->>>>>>> d5b9e3fcfa5bd5b081fc4ca009238bc0ec61455e
             </div>
           ) : trashedPages.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-[#9ca3af]">
@@ -149,12 +133,12 @@ const DashboardTrash = ({ pages, isMockUser, onPagesChanged }: DashboardTrashPro
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className="truncate text-[15px] font-semibold text-white">{item.title || "Untitled"}</h2>
-                  <p className="mt-1 truncate text-[12px] text-[#9ca3af]">
+                  <h4 className="truncate text-[20px] font-semibold text-white">{item.title || "Untitled"}</h4>
+                  <h4 className="mt-1 truncate text-[15px] text-[#9ca3af]">
                     {item.content
                       ? item.content.replace(/<[^>]+>/g, "").slice(0, 80) || "No content"
                       : "No content"}
-                  </p>
+                  </h4>
                 </div>
                 <div className="relative">
                   <button
