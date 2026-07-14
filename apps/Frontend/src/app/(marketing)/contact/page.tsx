@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Footer from '@/components/shared/Footer'
 import Header from '@/components/shared/Header'
 import React from 'react'
@@ -12,15 +15,17 @@ type InputFieldProps = {
   icon: React.ReactNode
   type: string
   placeholder: string
+   required?: boolean;
 }
 
-const InputField = ({ icon, type, placeholder }: InputFieldProps) => {
+const InputField = ({ icon, type, placeholder, required }: InputFieldProps) => {
   return (
     <div className="flex bg-[#111827] border border-gray-800 rounded-xl px-4 py-4 focus-within:border-purple-500 transition">
       {icon}
       <input
         type={type}
         placeholder={placeholder}
+        required={required}
         className="w-full bg-transparent outline-none placeholder:text-gray-500"
       />
     </div>
@@ -31,15 +36,17 @@ const InputField = ({ icon, type, placeholder }: InputFieldProps) => {
 type MessageFieldProps = {
   icon: React.ReactNode
   placeholder: string
+   required?: boolean;
 }
 
-const MessageField = ({ icon, placeholder }: MessageFieldProps) => {
+const MessageField = ({ icon, placeholder, required }: MessageFieldProps) => {
   return (
     <div className="flex bg-[#111827] border border-gray-800 rounded-xl px-4 py-4 focus-within:border-purple-500 transition">
       {icon}
       <textarea
         placeholder={placeholder}
         rows={6}
+        required={required}
         className="w-full bg-transparent outline-none resize-none placeholder:text-gray-500"
       />
     </div>
@@ -47,9 +54,31 @@ const MessageField = ({ icon, placeholder }: MessageFieldProps) => {
 }
 
 
-const page = () => {
-  return (
-    /*main page wrapper*/
+const ContactPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    if (!form.checkValidity()) {
+  form.reportValidity();
+  return;
+}
+    setIsLoading(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    alert("Thank you! We received your message.");
+
+    form.reset();
+
+    setIsLoading(false);
+  };   
+  
+  return(
+  
+  /*main page wrapper*/
     <div className="relative pt-[70px] z-0 bg-black min-h-screen text-white">
       <Header />
 
@@ -125,12 +154,12 @@ const page = () => {
     
     {/* Right Side Form */} 
     <div className="w-full md:w-[90%] ml-0 md:ml-auto bg-[#08101d] rounded-[20px] md:rounded-[30px] p-5 md:p-10 shadow-lg mt-6 md:mt-10">
-    <form className="space-y-6">
-
+    <form onSubmit={handleSubmit} className="space-y-6">
 {/* Name Input Field */}
 <InputField
   type="text"
   placeholder="Your Name"
+  required
   icon={
     <svg
       className="w-5 h-5 text-gray-500 mr-3 shrink-0"
@@ -152,6 +181,7 @@ const page = () => {
 <InputField
   type="email"
   placeholder="Your Email"
+  required
   icon={
     <svg
       className="w-5 h-5 text-gray-500 mr-3 shrink-0"
@@ -181,6 +211,7 @@ const page = () => {
 {/* Message Textarea Field */}
 <MessageField
   placeholder="Your Message"
+  required
   icon={
     <svg
       className="w-5 h-5 text-gray-500 mr-3 mt-1 shrink-0"
@@ -204,8 +235,12 @@ const page = () => {
   }
 />
 
-<button type="submit" className={`${buttonStyle} flex items-center justify-center gap-2`}>
-  <span>Send Message</span>
+<button 
+type="submit"
+disabled={isLoading}
+className={`${buttonStyle} flex items-center justify-center gap-2 disabled:opacity-60`}
+>
+  <span>{isLoading ? "Sending..." : "Send Message"}</span>
 
   <svg
     className="w-5 h-5"
@@ -229,7 +264,6 @@ const page = () => {
         <Footer />
       
     </div>
-  )
-}
-
-export default page
+  );
+};
+export default ContactPage
